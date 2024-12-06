@@ -1,0 +1,23 @@
+ if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        {
+
+            // convert user input into world movement
+            float horizontalMovement = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
+            float verticalMovement = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
+
+            //assign movement to a single vector3
+            Vector3 directionOfMovement = new Vector3(horizontalMovement, verticalMovement, 0);
+
+            // apply movement to player's transform
+            gameObject.transform.Translate(directionOfMovement);
+        }
+
+another method:
+ void Level2Movement()
+    {
+        float forwardMovement = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
+        float turnMovement = Input.GetAxis("Horizontal") * turnSpeed * Time.deltaTime;
+
+        transform.Translate(forwardMovement * Vector3.forward);
+        transform.Rotate(turnMovement * Vector3.up);
+    }

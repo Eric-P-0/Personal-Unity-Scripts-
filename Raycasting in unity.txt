@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class raycast : MonoBehaviour
+{
+    //layer mask that public in unity to select what is detected by the cast (check line 24)
+    public LayerMask mask;
+    [Range(0f,150f)] public float speed = 50f; 
+    public Text yes;
+    // Update is called once per frame
+    void Update()
+    {
+        transform.Rotate(Vector3.up*speed*Time.deltaTime);
+        // Raycast ( Origin, direction, distance, 
+        Ray ray = new Ray(transform.position, transform.right);
+        //variable to check if raycast intercepts with something
+        RaycastHit hit;
+
+        //if the physics of the raycast "Ray" interceptis with something at the distance of 
+            // 10 units, then...
+
+        if (Physics.Raycast(ray, out hit,10,mask))
+        {
+            // Draw a line from the center origin of the ray "Ray",to a hitpoint that is red
+            Debug.DrawLine(ray.origin, hit.point, Color.red);
+            yes.text = ("status: Detected!");
+        }
+        else
+        {// Draw a line from the center origin of the ray "Ray",to the distance of the origin and direction
+                // multiplied by 10 that is the color green
+            Debug.DrawLine(ray.origin, ray.origin + ray.direction * 10, Color.green);
+            yes.text = ("status: Not detected...");
+        }
+    }
+    
+}

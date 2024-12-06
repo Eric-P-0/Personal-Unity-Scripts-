@@ -1,0 +1,84 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class test_text : MonoBehaviour
+{
+    public float delay = 0.1f;
+    public string fullText;
+    private string currentText = "";
+    public Text speak;
+
+    bool touch = true;
+
+
+    //these are for sounds
+    public AudioSource sound;  
+    public AudioClip[] audioClipArray;
+    //spawnpoint
+    public Transform spawnpoint;
+
+
+    // Start is called before the first frame update
+    private void Awake()
+    {
+        sound = GetComponent<AudioSource>();
+    }
+    void Start()
+    {
+        
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    { 
+        if (other.CompareTag("Player")&&touch==true)
+        {
+           
+            StartCoroutine(showtext());
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {if (other.CompareTag("Player"))
+        {
+            cleartext();
+        }
+        
+    }
+    IEnumerator showtext()
+    {
+        touch = false;
+
+        // Loop for checking each character 
+        for (int i = 0; i < fullText.Length; i++)
+            {
+            
+            currentText = fullText.Substring(0, i);
+              speak.text = currentText;
+
+            //~~~~ PLAY SOUND ARRAY FROM A NUMER OF SOUNDS THAT PLAY FOR EACH CHARACTER TYPED"
+
+            //sound.clip = audioClipArray[Random.Range(0, audioClipArray.Length)];
+            //ound.PlayOneShot(sound.clip);
+
+            //delay being speed in which the text types
+
+            yield return new WaitForSeconds(delay); 
+
+            }
+        touch = true;
+        Invoke("cleartext", 3.5f);
+
+    }
+    void cleartext()
+    {
+        speak.text = ("");
+    }
+}
+

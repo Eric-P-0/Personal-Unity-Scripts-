@@ -1,0 +1,76 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class healthbar : MonoBehaviour
+{
+    public Transform bar;
+    private float size = 1f;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        healthchange();
+        colorChange();
+      
+        bar.localScale = new Vector2(size, 1f);
+    }
+    //use to change healthbar
+    private void healthchange()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            if (size > 0)
+            {
+                size -= .01f;
+                if (size < 0)
+                {
+                    size = 0;
+                }
+            }
+
+        }
+        if (Input.GetMouseButton(1))
+        {
+            if (size < 1)
+            {
+
+                size += .02f;
+            }
+            if (size > 1)
+            {
+                size = 1;
+            }
+        }
+    }
+    private void colorChange()
+    {
+       if(size < .35f)
+        {
+
+            if ((size * 100f) % 3 == 0)
+            {
+
+                bar.Find("BarSprite").GetComponent<Image>().color = (Color.white);
+            }
+            else
+            {
+                bar.Find("BarSprite").GetComponent<Image>().color = (Color.red);
+
+            }
+
+        }
+        if (size > .35f)
+        {
+            bar.Find("BarSprite").GetComponent<Image>().color = (Color.red);
+        }
+    }
+}
